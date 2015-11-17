@@ -12,6 +12,8 @@ Remember to configure the plugin in config.json in your home directory inside th
 
 Look for a sample config in [config.json example](https://github.com/ilcato/homebridge-ifttt/blob/master/config.json).
 
+See [IFTTT Maker Channel](https://ifttt.com/maker) for an explanation on how to configure an IFTTT recipe with a Maker Channel.
+
 You need to put the IFTTT Maker channel key in the configuration file and define a set of Buttons.
 
 Every button, once pressed with an Homekit app or via Siri, will generate an IFTTT trigger on the Maker channel.
