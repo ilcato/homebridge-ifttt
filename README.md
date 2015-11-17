@@ -9,7 +9,8 @@ The plugin is published through [NPM](https://www.npmjs.com/package/homebridge-i
 
 # Configuration
 Remember to configure the plugin in config.json in your home directory inside the .homebridge directory.
-Look for a sample config in [config.json example](https://github.com/ilcato/homebridge-ifttt/blob/master/config.json)
-You need to put the IFTTT Maker channel key in the configuration file and define a set of Buttons. Every button, once press with an Homekit app or via Siri, will generate an IFTTT trigger on the Maker channel.
+--Look for a sample config in [config.json example](https://github.com/ilcato/homebridge-ifttt/blob/master/config.json).
+--You need to put the IFTTT Maker channel key in the configuration file and define a set of Buttons.
+--Every button, once pressed with an Homekit app or via Siri, will generate an IFTTT trigger on the Maker channel.
 
 
