@@ -1,0 +1,56 @@
+{
+    "bridge": {
+        "name": "HomebridgeIFTTT",
+        "username": "CC:22:3D:E3:CE:30",
+        "port": 51826,
+        "pin": "031-45-154"
+    },
+    
+    "description": "This is an example configuration file. You can use this as a template for creating your own configuration file.",
+
+    "platforms": [
+            {
+            "platform": "IFTTT",
+            "name": "IFTTT",
+            "makerkey": "PUT KEY OF YOUR MAKER CHANNEL HERE",
+            "accessories": [{
+                    "name": "Accessorio 1",
+                    "buttons": [
+                    	{
+                    		"caption": "A1-1",
+                    		"trigger": "T1-1"
+                    	},{
+                    		"caption": "A1-2",
+                    		"trigger": "T1-2"
+                    	},{
+                    		"caption": "A1-3",
+                    		"trigger": "T1-3"
+                    	},{
+                    		"caption": "A1-4",
+                    		"trigger": "T1-4"
+                    	}
+                    ]
+            	}, {
+                    "name": "Accessorio 2",
+                    "buttons": [
+                    	{
+                    		"caption": "A2-1",
+                    		"trigger": "T2-1"
+                    	},{
+                    		"caption": "A2-2",
+                    		"trigger": "T2-2"
+                    	},{
+                    		"caption": "A2-3",
+                    		"trigger": "T2-3"
+                    	},{
+                    		"caption": "A2-4",
+                    		"trigger": "T2-4"
+                    	}
+                    ]
+            	}
+            ]
+        }
+    ],
+    "accessories": [
+    ]
+}
