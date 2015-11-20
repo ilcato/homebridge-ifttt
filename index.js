@@ -7,14 +7,16 @@
 //             "name": "IFTTT",
 //             "makerkey": "PUT KEY OF YOUR MAKER CHANNEL HERE",
 //             "accessories": [{
-//                     "name": "Accessorio 1",
+//                     "name": "Accessory 1",
 //                     "buttons": [
 //                     	{
 //                     		"caption": "A1-1",
-//                     		"trigger": "T1-1"
+//                     		"triggerOn": "T1-1On",
+//                     		"triggerOff": "T1-1Off"
 //                     	},{
 //                     		"caption": "A1-2",
-//                     		"trigger": "T1-2"
+//                     		"triggerOn": "T1-2On",
+//                     		"triggerOff": "T1-2Off"
 //                     	},{
 //                     		"caption": "A1-3",
 //                     		"trigger": "T1-3"
@@ -24,7 +26,7 @@
 //                     	}
 //                     ]
 //             	}, {
-//                     "name": "Accessorio 2",
+//                     "name": "Accessory 2",
 //                     "buttons": [
 //                     	{
 //                     		"caption": "A2-1",
@@ -44,6 +46,12 @@
 //             ]
 //         }
 // ],
+//
+// If you specify both "triggerOn" and "triggerOff" values to a button it will generate 
+// different triggers for the two different status of the switch.
+// If you only specify the "trigger" value to a button it behaves like a push button
+// generating the trigger after the selection of the button and automatically returning
+// to the off status.
 //
 // When you attempt to add a device, it will ask for a "PIN code".
 // The default code for all HomeBridge accessories is 031-45-154.
@@ -87,7 +95,13 @@ IFTTTPlatform.prototype = {
 						controlService: new Service.Switch(s.buttons[b].caption),
 						characteristics: [Characteristic.On]
 					};
-					service.controlService.subtype = s.buttons[b].trigger;
+					if (s.buttons[b].trigger != null)
+						service.controlService.subtype = s.buttons[b].trigger;
+					else
+						service.controlService.subtype = s.buttons[b].triggerOn + s.buttons[b].triggerOff;
+					service.controlService.trigger = s.buttons[b].trigger;
+					service.controlService.triggerOn = s.buttons[b].triggerOn;
+					service.controlService.triggerOff = s.buttons[b].triggerOff;
 	     		   	that.log("Loading service: " + service.controlService.displayName + ", subtype: " + service.controlService.subtype);
 					services.push(service);
 				}
@@ -140,8 +154,17 @@ IFTTTPlatform.prototype = {
     	characteristic
 		.on('set', function(value, callback, context) {
 						if(context !== 'fromSetValue') {
-							if (service.controlService.subtype != null) {
-								homebridgeAccessory.platform.command(service.controlService.subtype, "", homebridgeAccessory);
+							var trigger = null;
+							if (service.controlService.trigger != null)
+								trigger = service.controlService.trigger;
+							else if (value == 0) 
+								trigger = service.controlService.triggerOff;
+							else
+								trigger = service.controlService.triggerOn;
+
+							homebridgeAccessory.platform.command(trigger, "", homebridgeAccessory);
+							
+							if (service.controlService.trigger != null) {
 								// In order to behave like a push button reset the status to off
 								setTimeout( function(){
 									characteristic.setValue(false, undefined, 'fromSetValue');

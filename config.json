@@ -14,14 +14,16 @@
             "name": "IFTTT",
             "makerkey": "PUT KEY OF YOUR MAKER CHANNEL HERE",
             "accessories": [{
-                    "name": "Accessorio 1",
+                    "name": "Accessory 1",
                     "buttons": [
                     	{
                     		"caption": "A1-1",
-                    		"trigger": "T1-1"
+                    		"triggerOn": "T1-1On",
+                    		"triggerOff": "T1-1Off"
                     	},{
                     		"caption": "A1-2",
-                    		"trigger": "T1-2"
+                    		"triggerOn": "T1-2On",
+                    		"triggerOff": "T1-2Off"
                     	},{
                     		"caption": "A1-3",
                     		"trigger": "T1-3"
@@ -31,7 +33,7 @@
                     	}
                     ]
             	}, {
-                    "name": "Accessorio 2",
+                    "name": "Accessory 2",
                     "buttons": [
                     	{
                     		"caption": "A2-1",
