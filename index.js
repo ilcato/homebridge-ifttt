@@ -157,11 +157,13 @@ IFTTTPlatform.prototype = {
 							var trigger = null;
 							if (service.controlService.trigger != null)
 								trigger = service.controlService.trigger;
-							else if (value == 0) 
+							else if (value == 0) {
 								trigger = service.controlService.triggerOff;
-							else
+								this.onoffstate = false;
+							} else {
 								trigger = service.controlService.triggerOn;
-
+								this.onoffstate = true;
+							}
 							homebridgeAccessory.platform.command(trigger, "", homebridgeAccessory);
 							
 							if (service.controlService.trigger != null) {
@@ -175,8 +177,12 @@ IFTTTPlatform.prototype = {
 				   }.bind(this) );
     characteristic
         .on('get', function(callback) {
-						// a push button is normally off
-						callback(undefined, false);
+        				if (service.controlService.trigger != null)
+							// a push button is normally off
+							callback(undefined, false);
+						else {
+							callback(undefined, this.onoffstate);
+						}
                    }.bind(this) );
   },
   getServices: function(homebridgeAccessory) {
@@ -198,5 +204,6 @@ IFTTTPlatform.prototype = {
 }
 
 function IFTTTAccessory(services) {
+	this.onoffstate = false;
     this.services = services;
 }
