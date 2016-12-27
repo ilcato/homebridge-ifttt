@@ -102,6 +102,7 @@ IFTTTPlatform.prototype = {
 					service.controlService.trigger = s.buttons[b].trigger;
 					service.controlService.triggerOn = s.buttons[b].triggerOn;
 					service.controlService.triggerOff = s.buttons[b].triggerOff;
+					service.controlService.onoffstate = false;
 	     		   	that.log("Loading service: " + service.controlService.displayName + ", subtype: " + service.controlService.subtype);
 					services.push(service);
 				}
@@ -159,10 +160,10 @@ IFTTTPlatform.prototype = {
 								trigger = service.controlService.trigger;
 							else if (value == 0) {
 								trigger = service.controlService.triggerOff;
-								this.onoffstate = false;
+								service.controlService.onoffstate = false;
 							} else {
 								trigger = service.controlService.triggerOn;
-								this.onoffstate = true;
+								service.controlService.onoffstate = true;
 							}
 							homebridgeAccessory.platform.command(trigger, "", homebridgeAccessory);
 							
@@ -181,7 +182,7 @@ IFTTTPlatform.prototype = {
 							// a push button is normally off
 							callback(undefined, false);
 						else {
-							callback(undefined, this.onoffstate);
+							callback(undefined, service.controlService.onoffstate);
 						}
                    }.bind(this) );
   },
@@ -204,6 +205,5 @@ IFTTTPlatform.prototype = {
 }
 
 function IFTTTAccessory(services) {
-	this.onoffstate = false;
     this.services = services;
 }
