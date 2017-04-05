@@ -64,7 +64,7 @@
 // If you have a button with only "trigger" specified, the trigger can be delayed using delayOn.
 //
 // If you leave out delayOn or delayOff it will be treated as if there is no delay.
-// This means you can have delayOn without delayOff and vice versa.
+// This means you can have delayOn without delayOff and vice versa or even leave both values out.
 // All delay values are specified in seconds.
 //
 // When you attempt to add a device, it will ask for a "PIN code".
