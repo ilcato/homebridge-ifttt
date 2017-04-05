@@ -13,17 +13,17 @@
 //                     		"caption": "A1-1",
 //                     		"triggerOn": "T1-1On",
 //                     		"triggerOff": "T1-1Off",
-//							"delayOn": 4,
-//							"delayOff": 3
+//                      	"delayOn": 4,
+//                      	"delayOff": 3
 //                     	},{
 //                     		"caption": "A1-2",
 //                     		"triggerOn": "T1-2On",
 //                     		"triggerOff": "T1-2Off",
-//							"delayOff": 1
+//                      	"delayOff": 1
 //                     	},{
 //                     		"caption": "A1-3",
 //                     		"trigger": "T1-3",
-//							"delayOn": 5
+//                      	"delayOn": 5
 //                     	},{
 //                     		"caption": "A1-4",
 //                     		"trigger": "T1-4"
