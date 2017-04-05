@@ -95,13 +95,12 @@ IFTTTPlatform.prototype = {
 						controlService: new Service.Switch(s.buttons[b].caption),
 						characteristics: [Characteristic.On]
 					};
-					if (s.buttons[b].trigger != null)
-						service.controlService.subtype = s.buttons[b].trigger;
-					else
-						service.controlService.subtype = s.buttons[b].triggerOn + s.buttons[b].triggerOff;
+					service.controlService.subtype = s.buttons[b].trigger != null ? s.buttons[b].trigger : s.buttons[b].triggerOn + s.buttons[b].triggerOff;
 					service.controlService.trigger = s.buttons[b].trigger;
 					service.controlService.triggerOn = s.buttons[b].triggerOn;
 					service.controlService.triggerOff = s.buttons[b].triggerOff;
+					service.controlService.delayOn = s.buttons[b].delayOn;
+					service.controlService.delayOff = s.buttons[b].delayOff;
 					service.controlService.onoffstate = false;
 	     		   	that.log("Loading service: " + service.controlService.displayName + ", subtype: " + service.controlService.subtype);
 					services.push(service);
@@ -156,6 +155,8 @@ IFTTTPlatform.prototype = {
 		.on('set', function(value, callback, context) {
 						if(context !== 'fromSetValue') {
 							var trigger = null;
+							var delayOn = service.controlService.delayOn;
+							var delayOff = service.controlService.delayOff;
 							if (service.controlService.trigger != null)
 								trigger = service.controlService.trigger;
 							else if (value == 0) {
@@ -164,8 +165,16 @@ IFTTTPlatform.prototype = {
 							} else {
 								trigger = service.controlService.triggerOn;
 								service.controlService.onoffstate = true;
+							}							
+							
+							if(shouldDelayCommand(value, delayOn, delayOff)){
+								homebridgeAccessory.platform.log(trigger + " scheduled to run in " + getDelay(value, delayOn, delayOff)/1000 + " seconds.");
+								setTimeout(function() {
+									homebridgeAccessory.platform.command(trigger, "", homebridgeAccessory);
+								}, getDelay(value, delayOn, delayOff));
+							} else {
+								homebridgeAccessory.platform.command(trigger, "", homebridgeAccessory);
 							}
-							homebridgeAccessory.platform.command(trigger, "", homebridgeAccessory);
 							
 							if (service.controlService.trigger != null) {
 								// In order to behave like a push button reset the status to off
@@ -206,4 +215,25 @@ IFTTTPlatform.prototype = {
 
 function IFTTTAccessory(services) {
     this.services = services;
+}
+
+function shouldDelayCommand(value, delayOn, delayOff){
+	if(value === 1){
+		return delayOn;
+	} else if (value === 0){
+		return delayOff;
+	}
+	return false;
+}
+
+function getDelay(value, delayOn, delayOff){
+	var multiplier = 1000;
+	if(value === 1 && delayOn){
+		var result = delayOn * multiplier;
+		return result;
+	} else if (value === 0 && delayOff){
+		var result = delayOff * multiplier;
+		return result;
+	}
+	return 0;
 }
