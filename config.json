@@ -25,7 +25,8 @@
                     	},{
                     		"caption": "A1-2",
                     		"triggerOn": "T1-2On",
-                    		"triggerOff": "T1-2Off"
+                    		"triggerOff": "T1-2Off",
+							"delayOff": 1
                     	},{
                     		"caption": "A1-3",
                     		"trigger": "T1-3",

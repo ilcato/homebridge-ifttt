@@ -12,14 +12,18 @@
 //                     	{
 //                     		"caption": "A1-1",
 //                     		"triggerOn": "T1-1On",
-//                     		"triggerOff": "T1-1Off"
+//                     		"triggerOff": "T1-1Off",
+//							"delayOn": 4,
+//							"delayOff": 3
 //                     	},{
 //                     		"caption": "A1-2",
 //                     		"triggerOn": "T1-2On",
-//                     		"triggerOff": "T1-2Off"
+//                     		"triggerOff": "T1-2Off",
+//							"delayOff": 1
 //                     	},{
 //                     		"caption": "A1-3",
-//                     		"trigger": "T1-3"
+//                     		"trigger": "T1-3",
+//							"delayOn": 5
 //                     	},{
 //                     		"caption": "A1-4",
 //                     		"trigger": "T1-4"
@@ -52,6 +56,16 @@
 // If you only specify the "trigger" value to a button it behaves like a push button
 // generating the trigger after the selection of the button and automatically returning
 // to the off status.
+//
+// You can delay triggers using delayOn and delayOff.
+// If you have a button with triggerOn and triggerOff, the actions can be delayed
+// by delayOn and delayOff respectively.
+//
+// If you have a button with only "trigger" specified, the trigger can be delayed using delayOn.
+//
+// If you leave out delayOn or delayOff it will be treated as if there is no delay.
+// This means you can have delayOn without delayOff and vice versa.
+// All delay values are specified in seconds.
 //
 // When you attempt to add a device, it will ask for a "PIN code".
 // The default code for all HomeBridge accessories is 031-45-154.
