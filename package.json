@@ -23,7 +23,8 @@
     "Siri"
   ],
   "dependencies": {
-    "request": "^2.65.0"
+    "node-persist": "^2.1.0",
+    "request": "^2.83.0"
   },
   "author": "ilcato",
   "license": "GPL2",

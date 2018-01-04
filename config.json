@@ -5,7 +5,7 @@
         "port": 51826,
         "pin": "031-45-154"
     },
-    
+
     "description": "This is an example configuration file. You can use this as a template for creating your own configuration file.",
 
     "platforms": [
@@ -21,7 +21,8 @@
                     		"triggerOn": "T1-1On",
                     		"triggerOff": "T1-1Off",
                     		"delayOn": 4,
-                    		"delayOff": 3
+                    		"delayOff": 3,
+                        "stateful": true
                     	},{
                     		"caption": "A1-2",
                     		"triggerOn": "T1-2On",

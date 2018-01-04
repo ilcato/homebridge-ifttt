@@ -13,7 +13,7 @@ should be installed "globally" by typing:
 Remember to configure the plugin in config.json in your home directory inside the
 .homebridge directory.
 
-Look for a sample config in 
+Look for a sample config in
 [config.json example](https://github.com/ilcato/homebridge-ifttt/blob/master/config.json).
 
 
@@ -34,4 +34,4 @@ returning to the off status.
 Every button, once pressed with an Homekit app or via Siri, will generate an IFTTT trigger
 on the Maker channel.
 
-
+If you use the optional "stateful" config, the switch will maintain state across shutdown/reboots. 
