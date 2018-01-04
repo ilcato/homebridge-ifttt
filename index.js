@@ -68,6 +68,8 @@
 // This means you can have delayOn without delayOff and vice versa or even leave both values out.
 // All delay values are specified in seconds.
 //
+// If you use the optional "stateful" config, the switch will maintain state across shutdown/reboots.
+//
 // When you attempt to add a device, it will ask for a "PIN code".
 // The default code for all HomeBridge accessories is 031-45-154.
 
@@ -101,9 +103,9 @@ IFTTTPlatform.prototype = {
       	return;
       }
 
-    this.cacheDirectory = HomebridgeAPI.user.persistPath();
-    this.storage = require('node-persist');
-    this.storage.initSync({dir:this.cacheDirectory, forgiveParseErrors: true});
+      this.cacheDirectory = HomebridgeAPI.user.persistPath();
+      this.storage = require('node-persist');
+      this.storage.initSync({dir:this.cacheDirectory, forgiveParseErrors: true});
 
 	  this.IFTTTaccessories.map(function(s) {
 		that.log("Found: " + s.name);
@@ -120,22 +122,22 @@ IFTTTPlatform.prototype = {
 					service.controlService.triggerOn = s.buttons[b].triggerOn;
 					service.controlService.triggerOff = s.buttons[b].triggerOff;
 					service.controlService.delayOn = s.buttons[b].delayOn;
-					service.controlService.delayOff = s.buttons[b].delayOff;
+          service.controlService.delayOff = s.buttons[b].delayOff;
           service.controlService.stateful = s.buttons[b].stateful;
           // Read saved state and set initial
-            if (service.controlService.stateful) {
-              var cachedState = that.storage.getItemSync(service.controlService.displayName);
-              if((cachedState === undefined) || (cachedState === false)) {
-                service.controlService.onoffstate = false;
-              } else {
-                service.controlService.onoffstate = true;
-              }
-              that.log("Loading service: " + service.controlService.displayName + ", subtype: " + service.controlService.subtype + ", RestoredState: " + service.controlService.onoffstate);
-            } else {
+          if (service.controlService.stateful) {
+            var cachedState = that.storage.getItemSync(service.controlService.displayName);
+            if((cachedState === undefined) || (cachedState === false)) {
               service.controlService.onoffstate = false;
-              that.log("Loading service: " + service.controlService.displayName + ", subtype: " + service.controlService.subtype);
+            } else {
+              service.controlService.onoffstate = true;
             }
-					services.push(service);
+            that.log("Loading service: " + service.controlService.displayName + ", subtype: " + service.controlService.subtype + ", RestoredState: " + service.controlService.onoffstate);
+          } else {
+            service.controlService.onoffstate = false;
+            that.log("Loading service: " + service.controlService.displayName + ", subtype: " + service.controlService.subtype);
+          }
+          services.push(service);
 				}
 				accessory = new IFTTTAccessory(services);
 			}
@@ -216,7 +218,7 @@ IFTTTPlatform.prototype = {
 							}
               // Save state
               if (service.controlService.stateful) {
-	               this.storage.setItemSync(service.controlService.displayName, value);
+                this.storage.setItemSync(service.controlService.displayName, value);
               }
             }
 						callback();

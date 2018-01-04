@@ -22,7 +22,7 @@
                     		"triggerOff": "T1-1Off",
                     		"delayOn": 4,
                     		"delayOff": 3,
-                        "stateful": true
+                    		"stateful": true
                     	},{
                     		"caption": "A1-2",
                     		"triggerOn": "T1-2On",
