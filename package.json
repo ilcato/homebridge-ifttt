@@ -1,6 +1,6 @@
 {
   "name": "homebridge-ifttt",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Homebridge plugin for IFTTT Maker Channel",
   "note": "peerDependencies is hardcoded to peerDepdendencies in homebridge!!!",
   "main": "index.js",
@@ -23,7 +23,8 @@
     "Siri"
   ],
   "dependencies": {
-    "request": "^2.65.0"
+    "node-persist": "^2.1.0",
+    "request": "^2.83.0"
   },
   "author": "ilcato",
   "license": "GPL2",
