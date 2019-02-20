@@ -17,7 +17,6 @@ Remember to configure the plugin in config.json in your home directory inside th
 Look for a sample config in
 [config.json example](https://github.com/ilcato/homebridge-ifttt/blob/master/config.json).
 
-
 See [IFTTT Maker Channel](https://ifttt.com/maker) for an explanation on how to configure
 an IFTTT recipe with a Maker Channel.
 
