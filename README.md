@@ -30,7 +30,6 @@ If you only specify the "trigger" value to a button configuration it will behave
 push button generating the trigger after the selection of the button and automatically
 returning to the off status.
 
-
 Every button, once pressed with an Homekit app or via Siri, will generate an IFTTT trigger
 on the Maker channel.
 
