@@ -10,6 +10,7 @@ should be installed "globally" by typing:
     npm install -g homebridge-ifttt
 
 # Configuration
+
 Remember to configure the plugin in config.json in your home directory inside the
 .homebridge directory.
 
