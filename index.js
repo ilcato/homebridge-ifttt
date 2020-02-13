@@ -1,71 +1,169 @@
 // IFTTT Platform plugin for HomeBridge
 //
 // Remember to add platform to config.json. Example:
-// "platforms": [
+//   "platforms": [
+//     {
+//       "platform": "IFTTT",
+//       "name": "IFTTT",
+//       "makerkey": "PUT KEY OF YOUR MAKER CHANNEL HERE",
+//       "accessories": [
+//         {
+//           "name": "Accessory 1",
+//           "buttons": [
 //             {
-//             "platform": "IFTTT",
-//             "name": "IFTTT",
-//             "makerkey": "PUT KEY OF YOUR MAKER CHANNEL HERE",
-//             "accessories": [{
-//                     "name": "Accessory 1",
-//                     "buttons": [
-//                     	{
-//                     		"caption": "A1-1",
-//                     		"triggerOn": "T1-1On",
-//                     		"triggerOff": "T1-1Off",
-//                      	"delayOn": 4,
-//                      	"delayOff": 3,
-//                      	"stateful": true
-//                     	},{
-//                     		"caption": "A1-2",
-//                     		"triggerOn": "T1-2On",
-//                     		"triggerOff": "T1-2Off",
-//                      	"delayOff": 1
-//                     	},{
-//                     		"caption": "A1-3",
-//                     		"trigger": "T1-3",
-//                      	"delayOn": 5
-//                     	},{
-//                     		"caption": "A1-4",
-//                     		"trigger": "T1-4"
-//                     	}
-//                     ]
-//             	}, {
-//                     "name": "Accessory 2",
-//                     "buttons": [
-//                     	{
-//                     		"caption": "A2-1",
-//                     		"trigger": "T2-1"
-//                     	},{
-//                     		"caption": "A2-2",
-//                     		"trigger": "T2-2"
-//                     	},{
-//                     		"caption": "A2-3",
-//                     		"trigger": "T2-3"
-//                     	},{
-//                     		"caption": "A2-4",
-//                     		"trigger": "T2-4"
-//                     	}
-//                     ]
-//             	}
-//             ]
+//               "caption": "A1-1",
+//               "triggerOn": "T1-1On",
+//               "triggerOff": "T1-1Off",
+//               "delayOn": 4,
+//               "delayOff": 3,
+//               "stateful": true
+//             },
+//             {
+//               "caption": "A1-1 with Values",
+//               "triggerOn": "T1-1On-Values",
+//               "triggerOff": "T1-1Off-Values",
+//               "delayOn": 4,
+//               "delayOff": 3,
+//               "valuesOn": {
+//                 "value1": "test-on-value-1",
+//                 "value2": "test-on-value-2",
+//                 "value3": "test-on-value-3"
+//               },
+//               "valuesOff": {
+//                 "value1": "test-off-value-1",
+//                 "value2": "test-off-value-2",
+//                 "value3": "test-off-value-3"
+//               },
+//               "stateful": true
+//             },
+//             {
+//               "caption": "A1-2",
+//               "triggerOn": "T1-2On",
+//               "triggerOff": "T1-2Off",
+//               "delayOff": 1
+//             },
+//             {
+//               "caption": "A1-2 with Values",
+//               "triggerOn": "T1-2On-Values",
+//               "triggerOff": "T1-2Off-Values",
+//               "delayOff": 1,
+//               "valuesOff": {
+//                 "value1": "test-off-value-1",
+//                 "value2": "test-off-value-2"
+//               }
+//             },
+//             {
+//               "caption": "A1-3",
+//               "trigger": "T1-3",
+//               "delayOn": 5
+//             },
+//             {
+//               "caption": "A1-3 with Values",
+//               "trigger": "T1-3-Values",
+//               "delayOn": 5,
+//               "values": {
+//                 "value1": "test-value-1"
+//               }
+//             },
+//             {
+//               "caption": "A1-4",
+//               "trigger": "T1-4"
+//             },
+//             {
+//               "caption": "A1-4 with Values",
+//               "trigger": "T1-4-values",
+//               "values": {
+//                 "value1": "test-value-1"
+//               }
+//             }
+//           ]
+//         },
+//         {
+//           "name": "Accessory 2",
+//           "buttons": [
+//             {
+//               "caption": "A2-1",
+//               "trigger": "T2-1"
+//             },
+//             {
+//               "caption": "A2-2",
+//               "trigger": "T2-2"
+//             },
+//             {
+//               "caption": "A2-3",
+//               "trigger": "T2-3"
+//             },
+//             {
+//               "caption": "A2-4",
+//               "trigger": "T2-4"
+//             }
+//           ]
+//         },
+//         {
+//           "name": "Accessory 3",
+//           "buttons": [
+//             {
+//               "caption": "A3-1",
+//               "trigger": "T3-1",
+//               "values": {
+//                 "value1": "A"
+//               }
+//             },
+//             {
+//               "caption": "A3-2",
+//               "trigger": "T3-1",
+//               "values": {
+//                 "value1": "B"
+//               }
+//             },
+//             {
+//               "caption": "A3-3",
+//               "trigger": "T3-1",
+//               "values": {
+//                 "value1": "C"
+//               }
+//             }
+//           ]
+//         },
+//         {
+//           "name": "Accessory 4",
+//           "buttons": [
+//             {
+//               "caption": "A4-1",
+//               "trigger": "T4-1",
+//               "valuesOn": {
+//                 "value1": "A"
+//               },
+//               "valuesOff": {
+//                 "value1": "B"
+//               }
+//             }
+//           ]
 //         }
-// ],
+//       ]
+//     }
+//   ]
 //
-// If you specify both "triggerOn" and "triggerOff" values to a button it will generate
-// different triggers for the two different status of the switch.
-// If you only specify the "trigger" value to a button it behaves like a push button
-// generating the trigger after the selection of the button and automatically returning
-// to the off status.
+// If you specify both "triggerOn" and "triggerOff" values to a button configuration, it will
+// generate different triggers for the two different statuses of the switch.
+// If you only specify the "trigger" value to a button configuration, it will behave like a
+// push button generating the trigger after the selection of the button and automatically
+// returning to the off status.
 //
-// You can delay triggers using delayOn and delayOff.
-// If you have a button with triggerOn and triggerOff, the actions can be delayed
-// by delayOn and delayOff respectively.
+// You can send up to 3 values (IFTTT limit) alone with a button press.
+// Use "values" to specify which values to send.
+// If you'd like to send different values for "triggerOn" and "triggerOff",
+// use "valuesOn" and "valuesOff" respectively instead.
+// You can also just use "valuesOn" and "valuesOff" with "trigger".
 //
-// If you have a button with only "trigger" specified, the trigger can be delayed using delayOn.
+// You can delay triggers using "delayOn" and "delayOff".
+// If you have a button with "triggerOn" and "triggerOff", the actions can be delayed
+// by "delayOn" and "delayOff" respectively.
 //
-// If you leave out delayOn or delayOff it will be treated as if there is no delay.
-// This means you can have delayOn without delayOff and vice versa or even leave both values out.
+// If you have a button with only "trigger" specified, the trigger can be delayed using "delayOn".
+//
+// If you leave out "delayOn" or "delayOff" it will be treated as if there is no delay.
+// This means you can have "delayOn" without "delayOff" and vice versa or even leave both values out.
 // All delay values are specified in seconds.
 //
 // If you use the optional "stateful" config, the switch will maintain state across shutdown/reboots.
@@ -76,202 +174,210 @@
 'use strict';
 
 var Service, Characteristic, HomebridgeAPI;
-var request = require("request");
+var request = require('request');
 
 
-function IFTTTPlatform(log, config){
-  this.log          = log;
-  this.makerkey     = config["makerkey"];
-  this.IFTTTaccessories = config["accessories"];
+function IFTTTPlatform(log, config) {
+  this.log = log;
+  this.makerkey = config['makerkey'];
+  this.IFTTTaccessories = config['accessories'];
 }
 
-module.exports = function(homebridge) {
+module.exports = function (homebridge) {
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
   HomebridgeAPI = homebridge;
-  homebridge.registerPlatform("homebridge-ifttt", "IFTTT", IFTTTPlatform);
-}
+  homebridge.registerPlatform('homebridge-ifttt', 'IFTTT', IFTTTPlatform);
+};
 
 IFTTTPlatform.prototype = {
-  accessories: function(callback) {
-    this.log("Loading accessories...");
-
+  accessories: function (callback) {
+    this.log('Loading accessories...');
+    
     var that = this;
     var foundAccessories = [];
     if (this.IFTTTaccessories == null || this.IFTTTaccessories.length == 0) {
       callback(foundAccessories);
       return;
     }
-
+    
     this.cacheDirectory = HomebridgeAPI.user.persistPath();
     this.storage = require('node-persist');
-    this.storage.initSync({dir:this.cacheDirectory, forgiveParseErrors: true});
-
-    this.IFTTTaccessories.map(function(s) {
-      that.log("Found: " + s.name);
-      var accessory = null;
-      if (s.buttons.length != 0) {
-        var services = [];
-        for (var b = 0; b < s.buttons.length; b++) {
-          var service = {
-            controlService: new Service.Switch(s.buttons[b].caption),
-            characteristics: [Characteristic.On]
-          };
-          service.controlService.subtype = s.buttons[b].trigger != null ? s.buttons[b].trigger : s.buttons[b].triggerOn + s.buttons[b].triggerOff;
-          service.controlService.trigger = s.buttons[b].trigger;
-          service.controlService.triggerOn = s.buttons[b].triggerOn;
-          service.controlService.triggerOff = s.buttons[b].triggerOff;
-          service.controlService.delayOn = s.buttons[b].delayOn;
-          service.controlService.delayOff = s.buttons[b].delayOff;
-          service.controlService.stateful = s.buttons[b].stateful;
-          // Read saved state and set initial
-          if (service.controlService.stateful) {
-            var cachedState = that.storage.getItemSync(service.controlService.displayName);
-            if((cachedState === undefined) || (cachedState === false)) {
-              service.controlService.onoffstate = false;
+    this.storage.initSync({dir: this.cacheDirectory, forgiveParseErrors: true});
+    
+    this.IFTTTaccessories.map(function (s) {
+        that.log('Found: ' + s.name);
+        var accessory = null;
+        if (s.buttons.length != 0) {
+          var services = s.buttons.map(function (button, index) {
+            var service = {
+              controlService: new Service.Switch(button.caption),
+              characteristics: [Characteristic.On]
+            };
+            service.controlService.subtype = (button.trigger != null ? button.trigger : button.triggerOn + button.triggerOff) + index;
+            service.controlService.trigger = button.trigger;
+            service.controlService.triggerOn = button.triggerOn;
+            service.controlService.triggerOff = button.triggerOff;
+            service.controlService.values = button.values;
+            service.controlService.valuesOn = button.valuesOn;
+            service.controlService.valuesOff = button.valuesOff;
+            service.controlService.delayOn = button.delayOn;
+            service.controlService.delayOff = button.delayOff;
+            service.controlService.stateful = button.stateful;
+            // Read saved state and set initial
+            if (service.controlService.stateful) {
+              var cachedState = that.storage.getItemSync(service.controlService.displayName);
+              service.controlService.onoffstate = !((cachedState === undefined) || (cachedState === false));
+              that.log('Loading service: ' + service.controlService.displayName + ', subtype: ' + service.controlService.subtype + ', RestoredState: ' + service.controlService.onoffstate);
             } else {
-              service.controlService.onoffstate = true;
+              service.controlService.onoffstate = false;
+              that.log('Loading service: ' + service.controlService.displayName + ', subtype: ' + service.controlService.subtype);
             }
-            that.log("Loading service: " + service.controlService.displayName + ", subtype: " + service.controlService.subtype + ", RestoredState: " + service.controlService.onoffstate);
-          } else {
-            service.controlService.onoffstate = false;
-            that.log("Loading service: " + service.controlService.displayName + ", subtype: " + service.controlService.subtype);
-          }
-          services.push(service);
+            return service;
+          });
+          accessory = new IFTTTAccessory(services);
         }
-        accessory = new IFTTTAccessory(services);
+        if (accessory != null) {
+          accessory.getServices = function () {
+            return that.getServices(accessory);
+          };
+          accessory.platform = that;
+          accessory.remoteAccessory = s;
+          accessory.name = s.name;
+          accessory.model = 'IFTTT';
+          accessory.manufacturer = 'IFTTT';
+          accessory.serialNumber = '<unknown>';
+          foundAccessories.push(accessory);
+          
+        }
       }
-      if (accessory != null) {
-        accessory.getServices = function() {
-          return that.getServices(accessory);
-        };
-        accessory.platform 			= that;
-        accessory.remoteAccessory	= s;
-        accessory.name				= s.name;
-        accessory.model				= "IFTTT";
-        accessory.manufacturer		= "IFTTT";
-        accessory.serialNumber		= "<unknown>";
-        foundAccessories.push(accessory);
-
+    );
+    callback(foundAccessories);
+  },
+  command: function (trigger, value, homebridgeAccessory) {
+    var url = 'https://maker.ifttt.com/trigger/' + trigger.eventName + '/with/key/' + this.makerkey;
+    request({
+      url: url,
+      method: 'post',
+      body: JSON.stringify(trigger.values || {}),
+      headers: {'Content-type': 'application/json'}
+    }, function (err, response) {
+      if (err)
+        homebridgeAccessory.platform.log('There was a problem sending command ' + trigger.eventName + ' to ' + homebridgeAccessory.name);
+      else
+        homebridgeAccessory.platform.log(homebridgeAccessory.name + ' sent command ' + trigger.eventName);
+      homebridgeAccessory.platform.log(url);
+      if (trigger.values != null)
+        homebridgeAccessory.platform.log(trigger.values);
+    });
+  },
+  getInformationService: function (homebridgeAccessory) {
+    var informationService = new Service.AccessoryInformation();
+    informationService
+    .setCharacteristic(Characteristic.Name, homebridgeAccessory.name)
+    .setCharacteristic(Characteristic.Manufacturer, homebridgeAccessory.manufacturer)
+    .setCharacteristic(Characteristic.Model, homebridgeAccessory.model)
+    .setCharacteristic(Characteristic.SerialNumber, homebridgeAccessory.serialNumber);
+    return informationService;
+  },
+  bindCharacteristicEvents: function (characteristic, service, homebridgeAccessory) {
+    characteristic
+    .on('set', function (value, callback, context) {
+      if (context !== 'fromSetValue') {
+        var trigger = {};
+        if (service.controlService.trigger != null) {
+          trigger.eventName = service.controlService.trigger;
+          if (service.controlService.values != null)
+            trigger.values = service.controlService.values;
+          else if (value == 0)
+            trigger.values = service.controlService.valuesOff;
+          else if (value == 1)
+            trigger.values = service.controlService.valuesOn;
+        } else if (value == 0) {
+          trigger.eventName = service.controlService.triggerOff;
+          service.controlService.onoffstate = false;
+          if (service.controlService.valuesOff != null)
+            trigger.values = service.controlService.valuesOff;
+          else if (service.controlService.values != null)
+            trigger.values = service.controlService.values;
+        } else {
+          trigger.eventName = service.controlService.triggerOn;
+          service.controlService.onoffstate = true;
+          if (service.controlService.valuesOn != null)
+            trigger.values = service.controlService.valuesOn;
+          else if (service.controlService.values != null)
+            trigger.values = service.controlService.values;
+        }
+        
+        var delayOn = service.controlService.delayOn;
+        var delayOff = service.controlService.delayOff;
+        if (shouldDelayCommand(value, delayOn, delayOff)) {
+          homebridgeAccessory.platform.log(trigger.eventName + ' scheduled to run in ' + getDelay(value, delayOn, delayOff) / 1000 + ' seconds.');
+          setTimeout(function () {
+            homebridgeAccessory.platform.command(trigger, '', homebridgeAccessory);
+          }, getDelay(value, delayOn, delayOff));
+        } else {
+          homebridgeAccessory.platform.command(trigger, '', homebridgeAccessory);
+        }
+        
+        if (service.controlService.trigger != null && service.controlService.valuesOn == null && service.controlService.valuesOff == null) {
+          // In order to behave like a push button reset the status to off
+          setTimeout(function () {
+            characteristic.setValue(false, undefined, 'fromSetValue');
+          }, 100);
+        }
+        // Save state
+        if (service.controlService.stateful) {
+          this.storage.setItemSync(service.controlService.displayName, value);
+        }
       }
-    }
-  )
-  callback(foundAccessories);
-},
-command: function(c,value, that) {
-  var url = "https://maker.ifttt.com/trigger/"+c+"/with/key/"+this.makerkey;
-  var method = "get";
-  request({
-    url: url,
-    method: method
-  }, function(err, response) {
-    if (err) {
-      that.platform.log("There was a problem sending command " + c + " to" + that.name);
-      that.platform.log(url);
-    } else {
-      that.platform.log(that.name + " sent command " + c);
-      that.platform.log(url);
-    }
-  });
-},
-getInformationService: function(homebridgeAccessory) {
-  var informationService = new Service.AccessoryInformation();
-  informationService
-  .setCharacteristic(Characteristic.Name, homebridgeAccessory.name)
-  .setCharacteristic(Characteristic.Manufacturer, homebridgeAccessory.manufacturer)
-  .setCharacteristic(Characteristic.Model, homebridgeAccessory.model)
-  .setCharacteristic(Characteristic.SerialNumber, homebridgeAccessory.serialNumber);
-  return informationService;
-},
-bindCharacteristicEvents: function(characteristic, service, homebridgeAccessory) {
-  var onOff = characteristic.props.format == "bool" ? true : false;
-  characteristic
-  .on('set', function(value, callback, context) {
-    if (context !== 'fromSetValue') {
-      var trigger = null;
-      var delayOn = service.controlService.delayOn;
-      var delayOff = service.controlService.delayOff;
+      callback();
+    }.bind(this));
+    characteristic
+    .on('get', function (callback) {
       if (service.controlService.trigger != null)
-      trigger = service.controlService.trigger;
-      else if (value == 0) {
-        trigger = service.controlService.triggerOff;
-        service.controlService.onoffstate = false;
-      } else {
-        trigger = service.controlService.triggerOn;
-        service.controlService.onoffstate = true;
+        // a push button is normally off
+        callback(undefined, false);
+      else {
+        callback(undefined, service.controlService.onoffstate);
       }
-
-      if(shouldDelayCommand(value, delayOn, delayOff)){
-        homebridgeAccessory.platform.log(trigger + " scheduled to run in " + getDelay(value, delayOn, delayOff)/1000 + " seconds.");
-        setTimeout(function() {
-          homebridgeAccessory.platform.command(trigger, "", homebridgeAccessory);
-        }, getDelay(value, delayOn, delayOff));
-      } else {
-        homebridgeAccessory.platform.command(trigger, "", homebridgeAccessory);
+    }.bind(this));
+  },
+  getServices: function (homebridgeAccessory) {
+    var services = [];
+    var informationService = homebridgeAccessory.platform.getInformationService(homebridgeAccessory);
+    services.push(informationService);
+    for (var s = 0; s < homebridgeAccessory.services.length; s++) {
+      var service = homebridgeAccessory.services[s];
+      for (var i = 0; i < service.characteristics.length; i++) {
+        var characteristic = service.controlService.getCharacteristic(service.characteristics[i]);
+        if (characteristic == undefined)
+          characteristic = service.controlService.addCharacteristic(service.characteristics[i]);
+        homebridgeAccessory.platform.bindCharacteristicEvents(characteristic, service, homebridgeAccessory);
       }
-
-      if (service.controlService.trigger != null) {
-        // In order to behave like a push button reset the status to off
-        setTimeout( function(){
-          characteristic.setValue(false, undefined, 'fromSetValue');
-        }, 100 );
-      }
-      // Save state
-      if (service.controlService.stateful) {
-        this.storage.setItemSync(service.controlService.displayName, value);
-      }
+      services.push(service.controlService);
     }
-    callback();
-  }.bind(this) );
-  characteristic
-  .on('get', function(callback) {
-    if (service.controlService.trigger != null)
-    // a push button is normally off
-    callback(undefined, false);
-    else {
-      callback(undefined, service.controlService.onoffstate);
-    }
-  }.bind(this) );
-},
-getServices: function(homebridgeAccessory) {
-  var services = [];
-  var informationService = homebridgeAccessory.platform.getInformationService(homebridgeAccessory);
-  services.push(informationService);
-  for (var s = 0; s < homebridgeAccessory.services.length; s++) {
-    var service = homebridgeAccessory.services[s];
-    for (var i=0; i < service.characteristics.length; i++) {
-      var characteristic = service.controlService.getCharacteristic(service.characteristics[i]);
-      if (characteristic == undefined)
-      characteristic = service.controlService.addCharacteristic(service.characteristics[i]);
-      homebridgeAccessory.platform.bindCharacteristicEvents(characteristic, service, homebridgeAccessory);
-    }
-    services.push(service.controlService);
+    return services;
   }
-  return services;
-}
-}
+};
 
 function IFTTTAccessory(services) {
   this.services = services;
 }
 
-function shouldDelayCommand(value, delayOn, delayOff){
-  if(value === 1){
+function shouldDelayCommand(value, delayOn, delayOff) {
+  if (value === 1)
     return delayOn;
-  } else if (value === 0){
+  else if (value === 0)
     return delayOff;
-  }
   return false;
 }
 
-function getDelay(value, delayOn, delayOff){
+function getDelay(value, delayOn, delayOff) {
   var multiplier = 1000;
-  if(value === 1 && delayOn){
-    var result = delayOn * multiplier;
-    return result;
-  } else if (value === 0 && delayOff){
-    var result = delayOff * multiplier;
-    return result;
-  }
+  if (value === 1 && delayOn)
+    return delayOn * multiplier;
+  else if (value === 0 && delayOff)
+    return delayOff * multiplier;
   return 0;
 }

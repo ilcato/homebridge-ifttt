@@ -1,63 +1,153 @@
 {
-  "bridge": {
-    "name": "HomebridgeIFTTT",
-    "username": "CC:22:3D:E3:CE:30",
-    "port": 51826,
-    "pin": "031-45-154"
-  },
-
-  "description": "This is an example configuration file. You can use this as a template for creating your own configuration file.",
-
-  "platforms": [
-    {
-      "platform": "IFTTT",
-      "name": "IFTTT",
-      "makerkey": "PUT KEY OF YOUR MAKER CHANNEL HERE",
-      "accessories": [{
-        "name": "Accessory 1",
-        "buttons": [
-          {
-            "caption": "A1-1",
-            "triggerOn": "T1-1On",
-            "triggerOff": "T1-1Off",
-            "delayOn": 4,
-            "delayOff": 3,
-            "stateful": true
-          },{
-            "caption": "A1-2",
-            "triggerOn": "T1-2On",
-            "triggerOff": "T1-2Off",
-            "delayOff": 1
-          },{
-            "caption": "A1-3",
-            "trigger": "T1-3",
-            "delayOn": 5
-          },{
-            "caption": "A1-4",
-            "trigger": "T1-4"
-          }
-        ]
-        }, {
-        "name": "Accessory 2",
-        "buttons": [
-          {
-            "caption": "A2-1",
-            "trigger": "T2-1"
-          },{
-            "caption": "A2-2",
-            "trigger": "T2-2"
-          },{
-            "caption": "A2-3",
-            "trigger": "T2-3"
-          },{
-            "caption": "A2-4",
-            "trigger": "T2-4"
-          }
-        ]
-        }
-      ]
-    }
-  ],
-  "accessories": [
-  ]
+	"bridge": {
+		"name": "HomebridgeIFTTT",
+		"username": "CC:22:3D:E3:CE:30",
+		"port": 51826,
+		"pin": "031-45-154"
+	},
+	"description": "This is an example configuration file. You can use this as a template for creating your own configuration file.",
+	"platforms": [
+		{
+			"platform": "IFTTT",
+			"name": "IFTTT",
+			"makerkey": "PUT KEY OF YOUR MAKER CHANNEL HERE",
+			"accessories": [
+				{
+					"name": "Accessory 1",
+					"buttons": [
+						{
+							"caption": "A1-1",
+							"triggerOn": "T1-1On",
+							"triggerOff": "T1-1Off",
+							"delayOn": 4,
+							"delayOff": 3,
+							"stateful": true
+						},
+						{
+							"caption": "A1-1 with Values",
+							"triggerOn": "T1-1On-Values",
+							"triggerOff": "T1-1Off-Values",
+							"delayOn": 4,
+							"delayOff": 3,
+							"valuesOn": {
+								"value1": "test-on-value-1",
+								"value2": "test-on-value-2",
+								"value3": "test-on-value-3"
+							},
+							"valuesOff": {
+								"value1": "test-off-value-1",
+								"value2": "test-off-value-2",
+								"value3": "test-off-value-3"
+							},
+							"stateful": true
+						},
+						{
+							"caption": "A1-2",
+							"triggerOn": "T1-2On",
+							"triggerOff": "T1-2Off",
+							"delayOff": 1
+						},
+						{
+							"caption": "A1-2 with Values",
+							"triggerOn": "T1-2On-Values",
+							"triggerOff": "T1-2Off-Values",
+							"delayOff": 1,
+							"valuesOff": {
+								"value1": "test-off-value-1",
+								"value2": "test-off-value-2"
+							}
+						},
+						{
+							"caption": "A1-3",
+							"trigger": "T1-3",
+							"delayOn": 5
+						},
+						{
+							"caption": "A1-3 with Values",
+							"trigger": "T1-3-Values",
+							"delayOn": 5,
+							"values": {
+								"value1": "test-value-1"
+							}
+						},
+						{
+							"caption": "A1-4",
+							"trigger": "T1-4"
+						},
+						{
+							"caption": "A1-4 with Values",
+							"trigger": "T1-4-values",
+							"values": {
+								"value1": "test-value-1"
+							}
+						}
+					]
+				},
+				{
+					"name": "Accessory 2",
+					"buttons": [
+						{
+							"caption": "A2-1",
+							"trigger": "T2-1"
+						},
+						{
+							"caption": "A2-2",
+							"trigger": "T2-2"
+						},
+						{
+							"caption": "A2-3",
+							"trigger": "T2-3"
+						},
+						{
+							"caption": "A2-4",
+							"trigger": "T2-4"
+						}
+					]
+				},
+				{
+					"name": "Accessory 3",
+					"buttons": [
+						{
+							"caption": "A3-1",
+							"trigger": "T3-1",
+							"values": {
+								"value1": "A"
+							}
+						},
+						{
+							"caption": "A3-2",
+							"trigger": "T3-1",
+							"values": {
+								"value1": "B"
+							}
+						},
+						{
+							"caption": "A3-3",
+							"trigger": "T3-1",
+							"values": {
+								"value1": "C"
+							}
+						}
+					]
+				},
+				{
+					"name": "Accessory 4",
+					"buttons": [
+						{
+							"caption": "A4-1",
+							"trigger": "T4-1",
+							"valuesOn": {
+								"value1": "A"
+							},
+							"valuesOff": {
+								"value1": "B"
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"accessories": [
+	]
 }
