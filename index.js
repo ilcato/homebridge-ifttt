@@ -205,16 +205,38 @@ IFTTTPlatform.prototype = {
     this.storage = require('node-persist');
     this.storage.initSync({dir: this.cacheDirectory, forgiveParseErrors: true});
     
+    var subtypes = [];
+    
+    function generateSubtype(button) {
+      function valuesToString(values) {
+        return JSON.stringify(values).replace(/\W/g, '');
+      }
+      var result = (button.trigger || (button.triggerOn + button.triggerOff)) +
+        (button.values != null ? '-v' + valuesToString(button.values) : '') +
+        (button.valuesOn != null ? '-vOn' + valuesToString(button.valuesOn) : '') +
+        (button.valuesOff != null ? '-vOff' + valuesToString(button.valuesOff) : '');
+      var duplicateSubtype = subtypes.find(function (subtype) {
+        return subtype.indexOf(result) === 0;
+      });
+      if (duplicateSubtype) {
+        var num = duplicateSubtype.replace(/^.*___(\d+)$/, '$1');
+        num = parseInt(num == result ? '1' : num);
+        result += '___' + (num + 1);
+      }
+      subtypes.unshift(result);
+      return result;
+    }
+    
     this.IFTTTaccessories.map(function (s) {
         that.log('Found: ' + s.name);
         var accessory = null;
         if (s.buttons.length != 0) {
-          var services = s.buttons.map(function (button, index) {
+          var services = s.buttons.map(function (button) {
             var service = {
               controlService: new Service.Switch(button.caption),
               characteristics: [Characteristic.On]
             };
-            service.controlService.subtype = (button.trigger != null ? button.trigger : button.triggerOn + button.triggerOff) + index;
+            service.controlService.subtype = generateSubtype(button);
             service.controlService.trigger = button.trigger;
             service.controlService.triggerOn = button.triggerOn;
             service.controlService.triggerOff = button.triggerOff;
