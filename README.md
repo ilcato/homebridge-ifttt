@@ -31,7 +31,7 @@ If you only specify the "trigger" value to a button configuration, it will behav
 push button generating the trigger after the selection of the button and automatically
 returning to the off status.
 
-You can send up to 3 values (IFTTT limit) alone with a button press.
+You can send up to 3 values (IFTTT limit) along with a button press.
 Use "values" to specify which values to send.
 If you'd like to send different values for "triggerOn" and "triggerOff",
 use "valuesOn" and "valuesOff" respectively instead.
