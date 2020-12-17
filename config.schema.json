@@ -1,0 +1,236 @@
+{
+    "pluginAlias": "IFTTT",
+    "pluginType": "platform",
+    "singular": true,
+    "headerDisplay": "Homebridge plugin for IFTTT Maker Channel.",
+    "footerDisplay": "See [IFTTT Maker Channel](https://ifttt.com/maker) for an explanation on how to configure an IFTTT recipe with a Maker Channel.",
+    "schema": {
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "required": true,
+                "default": "IFTTT"
+            },
+            "makerkey": {
+                "title": "Name",
+                "type": "string",
+                "required": true,
+                "placeholder": "a4bti0Y-QLNNyNRdeK9K0PgCyn5BrIW13N9uyMqyECK",
+                "description": "Everything after https://maker.ifttt.com/use/, (https://maker.ifttt.com/use/a4bti0Y-QLNNyNRdeK9K0PgCyn5BrIW13N9uyMqyECK) "
+            },
+            "accessories": {
+                "title": "Accessories",
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "required": true,
+                            "placeholder": "Accessory 1",
+                            "description": "Accessories Name."
+                        },
+                        "buttons": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "caption": {
+                                        "type": "string",
+                                        "placeholder": "A1-3"
+                                    },
+                                    "trigger": {
+                                        "type": "string",
+                                        "placeholder": "T1-3"
+                                    },
+                                    "triggerOn": {
+                                        "type": "string",
+                                        "placeholder": "T1-1On-Values"
+                                    },
+                                    "triggerOff": {
+                                        "type": "string",
+                                        "placeholder": "T1-1Off-Values"
+                                    },
+                                    "delayOn": {
+                                        "type": "integer",
+                                        "placeholder": "5"
+                                    },
+                                    "delayOff": {
+                                        "type": "integer",
+                                        "placeholder": "4"
+                                    },
+                                    "values": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value1": {
+                                                "title": "Value 1",
+                                                "type": "string",
+                                                "placeholder": "A"
+                                            },
+                                            "value2": {
+                                                "title": "Value 2",
+                                                "type": "string",
+                                                "placeholder": "B"
+                                            },
+                                            "value3": {
+                                                "title": "Value 3",
+                                                "type": "string",
+                                                "placeholder": "C"
+                                            }
+                                        }
+                                    },
+                                    "valuesOn": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value1": {
+                                                "title": "Value 1",
+                                                "type": "string",
+                                                "placeholder": "A"
+                                            },
+                                            "value2": {
+                                                "title": "Value 2",
+                                                "type": "string",
+                                                "placeholder": "B"
+                                            },
+                                            "value3": {
+                                                "title": "Value 3",
+                                                "type": "string",
+                                                "placeholder": "C"
+                                            }
+                                        }
+                                    },
+                                    "valuesOff": {
+                                        "type": "object",
+                                        "properties": {
+                                            "value1": {
+                                                "title": "Value 1",
+                                                "type": "string",
+                                                "placeholder": "A"
+                                            },
+                                            "value2": {
+                                                "title": "Value 2",
+                                                "type": "string",
+                                                "placeholder": "B"
+                                            },
+                                            "value3": {
+                                                "title": "Value 3",
+                                                "type": "string",
+                                                "placeholder": "C"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "layout": [
+        "name",
+        "makerkey",
+        {
+            "key": "accessories",
+            "type": "array",
+            "expandable": true,
+            "expanded": true,
+            "items": [
+                {
+                    "type": "fieldset",
+                    "items": [
+                        "accessories[].name",
+                        {
+                            "key": "accessories[].buttons",
+                            "type": "array",
+                            "expandable": true,
+                            "expanded": true,
+                            "items": [
+                                {
+                                    "type": "fieldset",
+                                    "items": [
+                                        "accessories[].buttons[].caption",
+                                        {
+                                            "type": "div",
+                                            "displayFlex": true,
+                                            "flex-direction": "row",
+                                            "items": [
+                                                "accessories[].buttons[].trigger",
+                                                "accessories[].buttons[].triggerOn",
+                                                "accessories[].buttons[].triggerOff"
+                                            ]
+                                        },
+                                        {
+                                            "type": "div",
+                                            "displayFlex": true,
+                                            "flex-direction": "row",
+                                            "items": [
+                                                "accessories[].buttons[].delayOn",
+                                                "accessories[].buttons[].delayOff"
+                                            ]
+                                        },
+                                        {
+                                            "key": "accessories[].buttons[].values",
+                                            "type": "object",
+                                            "expandable": true,
+                                            "expanded": false,
+                                            "items": [
+                                                {
+                                                    "type": "div",
+                                                    "displayFlex": true,
+                                                    "flex-direction": "row",
+                                                    "items": [
+                                                        "accessories[].buttons[].values.value1",
+                                                        "accessories[].buttons[].values.value2",
+                                                        "accessories[].buttons[].values.value3"
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "key": "accessories[].buttons[].valuesOn",
+                                            "type": "object",
+                                            "expandable": true,
+                                            "expanded": false,
+                                            "items": [
+                                                {
+                                                    "type": "div",
+                                                    "displayFlex": true,
+                                                    "flex-direction": "row",
+                                                    "items": [
+                                                        "accessories[].buttons[].valuesOn.value1",
+                                                        "accessories[].buttons[].valuesOn.value2",
+                                                        "accessories[].buttons[].valuesOn.value3"
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "key": "accessories[].buttons[].valuesOff",
+                                            "type": "object",
+                                            "expandable": true,
+                                            "expanded": false,
+                                            "items": [
+                                                {
+                                                    "type": "div",
+                                                    "displayFlex": true,
+                                                    "flex-direction": "row",
+                                                    "items": [
+                                                        "accessories[].buttons[].valuesOff.value1",
+                                                        "accessories[].buttons[].valuesOff.value2",
+                                                        "accessories[].buttons[].valuesOff.value3"
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

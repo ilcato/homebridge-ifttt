@@ -306,7 +306,7 @@ IFTTTPlatform.prototype = {
     characteristic
     .on('set', function (value, callback, context) {
       if (context !== 'fromSetValue') {
-        var trigger = {};
+        var trigger = { eventName, values };
         if (service.controlService.trigger != null) {
           trigger.eventName = service.controlService.trigger;
           if (service.controlService.values != null)
