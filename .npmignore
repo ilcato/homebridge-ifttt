@@ -1,8 +1,24 @@
-# Ignore compiled code
+# Ignore source code
 
-dist
+src
 
 # ------------- Defaults -------------
+
+# eslint
+
+.eslintrc
+
+# typescript
+
+tsconfig.json
+
+# vscode
+
+.vscode
+
+# nodemon
+
+nodemon.json
 
 # Logs
 
@@ -152,8 +168,3 @@ dist
 .yarn/unplugged
 .yarn/build-state.yml
 .pnp.\*
-
-# Homebridge Testing
-
-persist/
-.DS_Store
