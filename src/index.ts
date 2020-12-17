@@ -36,7 +36,7 @@ IFTTTPlatform.prototype = {
 
     function generateSubtype(button) {
       function valuesToString(values) {
-        return JSON.stringify(values).replace(/\W/g, '');
+        return JSON.stringify(values) ? JSON.stringify(values).replace(/\W/g, '') : null;
       }
       let result =
         (button.trigger || button.triggerOn + button.triggerOff) +
@@ -92,7 +92,7 @@ IFTTTPlatform.prototype = {
           }
           return service;
         });
-        accessory = new IFTTTAccessory(services);
+        this.accessory = new IFTTTAccessory(services);
       }
       if (accessory !== null) {
         accessory.getServices = function () {
