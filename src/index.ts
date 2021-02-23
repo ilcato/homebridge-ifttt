@@ -55,7 +55,7 @@ IFTTTPlatform.prototype = {
 
     this.IFTTTaccessories.map((s) => {
       this.log('Found: ' + s.name);
-      let accessory: any = null;
+      const accessory: any = null;
       if (s.buttons.length !== 0) {
         const services = s.buttons.map((button) => {
           const service = {
