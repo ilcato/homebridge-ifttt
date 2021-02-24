@@ -18,10 +18,11 @@ module.exports = function (homebridge) {
   homebridge.registerPlatform('homebridge-ifttt', 'IFTTT', IFTTTPlatform);
 };
 
-IFTTTPlatform.prototype = {
+IFTTTPlatform.prototype = {  
   accessories: function (callback) {
     this.log('Loading accessories...');
 
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
     const foundAccessories: any = [];
     if (!this.IFTTTaccessories || this.IFTTTaccessories.length === 0) {
