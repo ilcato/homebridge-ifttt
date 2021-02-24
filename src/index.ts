@@ -24,7 +24,7 @@ IFTTTPlatform.prototype = {
 
     const that = this;
     const foundAccessories: any = [];
-    if (this.IFTTTaccessories === null || this.IFTTTaccessories.length === 0) {
+    if (!this.IFTTTaccessories || this.IFTTTaccessories.length === 0) {
       callback(foundAccessories);
       return;
     }
@@ -95,7 +95,7 @@ IFTTTPlatform.prototype = {
         });
         accessory = new IFTTTAccessory(services);
       }
-      if (accessory !== null) {
+      if (accessory) {
         accessory.getServices = function () {
           return that.getServices(accessory);
         };
@@ -127,7 +127,7 @@ IFTTTPlatform.prototype = {
         } else {
           homebridgeAccessory.platform.log(homebridgeAccessory.name + ' sent command ' + trigger.eventName);
           homebridgeAccessory.platform.log(url);
-          if (trigger.values !== null) {
+          if (trigger.values) {
             homebridgeAccessory.platform.log(trigger.values);
           }
         }
@@ -151,9 +151,9 @@ IFTTTPlatform.prototype = {
           let eventName: any;
           let values: any;
           const trigger = { eventName, values };
-          if (service.controlService.trigger !== null) {
+          if (service.controlService.trigger) {
             trigger.eventName = service.controlService.trigger;
-            if (service.controlService.values !== null) {
+            if (service.controlService.values) {
               trigger.values = service.controlService.values;
             } else if (value === 0) {
               trigger.values = service.controlService.valuesOff;
@@ -163,17 +163,17 @@ IFTTTPlatform.prototype = {
           } else if (value === 0) {
             trigger.eventName = service.controlService.triggerOff;
             service.controlService.onoffstate = false;
-            if (service.controlService.valuesOff !== null) {
+            if (service.controlService.valuesOff) {
               trigger.values = service.controlService.valuesOff;
-            } else if (service.controlService.values !== null) {
+            } else if (service.controlService.values) {
               trigger.values = service.controlService.values;
             }
           } else {
             trigger.eventName = service.controlService.triggerOn;
             service.controlService.onoffstate = true;
-            if (service.controlService.valuesOn !== null) {
+            if (service.controlService.valuesOn) {
               trigger.values = service.controlService.valuesOn;
-            } else if (service.controlService.values !== null) {
+            } else if (service.controlService.values) {
               trigger.values = service.controlService.values;
             }
           }
@@ -185,16 +185,16 @@ IFTTTPlatform.prototype = {
               trigger.eventName + ' scheduled to run in ' + getDelay(value, delayOn, delayOff) / 1000 + ' seconds.',
             );
             setTimeout(() => {
-              homebridgeAccessory.platform.command(trigger, '', homebridgeAccessory);
+              homebridgeAccessory.platform.command(trigger, homebridgeAccessory);
             }, getDelay(value, delayOn, delayOff));
           } else {
-            homebridgeAccessory.platform.command(trigger, '', homebridgeAccessory);
+            homebridgeAccessory.platform.command(trigger, homebridgeAccessory);
           }
 
           if (
-            service.controlService.trigger !== null &&
-            service.controlService.valuesOn === null &&
-            service.controlService.valuesOff === null
+            service.controlService.trigger &&
+            !service.controlService.valuesOn &&
+            !service.controlService.valuesOff
           ) {
             // In order to behave like a push button reset the status to off
             setTimeout(() => {
@@ -213,7 +213,7 @@ IFTTTPlatform.prototype = {
     characteristic.on(
       'get',
       (callback) => {
-        if (service.controlService.trigger !== null) {
+        if (service.controlService.trigger) {
           // a push button is normally off
           callback(undefined, false);
         } else {
@@ -230,10 +230,10 @@ IFTTTPlatform.prototype = {
       const service = homebridgeAccessory.services[s];
       for (let i = 0; i < service.characteristics.length; i++) {
         let characteristic = service.controlService.getCharacteristic(service.characteristics[i]);
-        if (characteristic === undefined) {
+        if (!characteristic) {
           characteristic = service.controlService.addCharacteristic(service.characteristics[i]);
-          homebridgeAccessory.platform.bindCharacteristicEvents(characteristic, service, homebridgeAccessory);
         }
+        homebridgeAccessory.platform.bindCharacteristicEvents(characteristic, service, homebridgeAccessory);
       }
       services.push(service.controlService);
     }
@@ -246,12 +246,11 @@ function IFTTTAccessory(this: any, services) {
 }
 
 function shouldDelayCommand(value, delayOn, delayOff) {
-  if (value === 1) {
+  if (value === 1 || value === true) {
     return delayOn;
-  } else if (value === 0) {
+  } else if (value === 0 || value === false) {
     return delayOff;
   }
-  return false;
 }
 
 function getDelay(value, delayOn, delayOff) {
