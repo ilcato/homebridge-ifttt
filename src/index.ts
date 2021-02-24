@@ -22,6 +22,7 @@ IFTTTPlatform.prototype = {
   accessories: function (callback) {
     this.log('Loading accessories...');
 
+    const that = this;
     const foundAccessories: any = [];
     if (this.IFTTTaccessories === null || this.IFTTTaccessories.length === 0) {
       callback(foundAccessories);
@@ -40,9 +41,9 @@ IFTTTPlatform.prototype = {
       }
       let result =
         (button.trigger || button.triggerOn + button.triggerOff) +
-        (button.values !== null ? '-v' + valuesToString(button.values) : '') +
-        (button.valuesOn !== null ? '-vOn' + valuesToString(button.valuesOn) : '') +
-        (button.valuesOff !== null ? '-vOff' + valuesToString(button.valuesOff) : '');
+        (button.values ? '-v' + valuesToString(button.values) : '') +
+        (button.valuesOn ? '-vOn' + valuesToString(button.valuesOn) : '') +
+        (button.valuesOff ? '-vOff' + valuesToString(button.valuesOff) : '');
       const duplicateSubtype: any = subtypes.find((subtype: any) => subtype.indexOf(result) === 0);
       if (duplicateSubtype) {
         let num = duplicateSubtype.replace(/^.*___(\d+)$/, '$1');
@@ -55,7 +56,7 @@ IFTTTPlatform.prototype = {
 
     this.IFTTTaccessories.map((s) => {
       this.log('Found: ' + s.name);
-      const accessory: any = null;
+      let accessory: any = null;
       if (s.buttons.length !== 0) {
         const services = s.buttons.map((button) => {
           const service = {
@@ -92,11 +93,11 @@ IFTTTPlatform.prototype = {
           }
           return service;
         });
-        this.accessory = new IFTTTAccessory(services);
+        accessory = new IFTTTAccessory(services);
       }
       if (accessory !== null) {
         accessory.getServices = function () {
-          return this.getServices(accessory);
+          return that.getServices(accessory);
         };
         accessory.platform = this;
         accessory.remoteAccessory = s;
