@@ -4,12 +4,8 @@ import { bind } from 'module';
 
 let Service, Characteristic, HomebridgeAPI;
 import superagent = require('superagent');
+import storage = require('node-persist');
 
-function IFTTTPlatform(this: any, log, config) {
-  this.log = log;
-  this.makerkey = config['makerkey'];
-  this.IFTTTaccessories = config['accessories'];
-}
 
 module.exports = function (homebridge) {
   Service = homebridge.hap.Service;
@@ -18,9 +14,22 @@ module.exports = function (homebridge) {
   homebridge.registerPlatform('homebridge-ifttt', 'IFTTT', IFTTTPlatform);
 };
 
-IFTTTPlatform.prototype = {
-  accessories: function (callback) {
-    this.log('Loading accessories...');
+class IFTTTPlatform {
+  log: (format: string, message: any) => void;
+  api: any;
+  makerkey: string;
+  IFTTTaccessories: any;
+  cacheDirectory: any;
+
+  constructor(log: (format: string, message: any) => void, config: any, api: any) {
+    this.log = log;
+    this.api = api;
+    this.makerkey = config['makerkey'];
+    this.IFTTTaccessories = config['accessories'];
+  }
+
+  accessories(callback) {
+    this.log('Loading accessories...', '');
 
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
@@ -31,8 +40,7 @@ IFTTTPlatform.prototype = {
     }
 
     this.cacheDirectory = HomebridgeAPI.user.persistPath();
-    this.storage = require('node-persist');
-    this.storage.init({ dir: this.cacheDirectory, forgiveParseErrors: true });
+    storage.init({ dir: this.cacheDirectory, forgiveParseErrors: true });
 
     const subtypes: any = [];
 
@@ -56,7 +64,7 @@ IFTTTPlatform.prototype = {
     }
 
     this.IFTTTaccessories.map((s) => {
-      this.log('Found: ' + s.name);
+      this.log('Found: ', s.name);
       let accessory: any = null;
       if (s.buttons.length !== 0) {
         const services = s.buttons.map((button) => {
@@ -76,20 +84,19 @@ IFTTTPlatform.prototype = {
           service.controlService.stateful = button.stateful;
           // Read saved state and set initial
           if (service.controlService.stateful) {
-            const cachedState = this.storage.getItemSync(service.controlService.displayName);
+            const cachedState = storage.getItemSync(service.controlService.displayName);
             service.controlService.onoffstate = !(cachedState === undefined || cachedState === false);
             this.log(
-              'Loading service: ' +
-              service.controlService.displayName +
+              'Loading service: ', service.controlService.displayName +
               ', subtype: ' +
               service.controlService.subtype +
               ', RestoredState: ' +
-              service.controlService.onoffstate,
+            service.controlService.onoffstate,
             );
           } else {
             service.controlService.onoffstate = false;
             this.log(
-              'Loading service: ' + service.controlService.displayName + ', subtype: ' + service.controlService.subtype,
+              'Loading service: ', service.controlService.displayName + ', subtype: ' + service.controlService.subtype,
             );
           }
           return service;
@@ -110,8 +117,9 @@ IFTTTPlatform.prototype = {
       }
     });
     callback(foundAccessories);
-  },
-  command: async function (trigger, homebridgeAccessory) {
+  }
+
+  async command(trigger, homebridgeAccessory) {
     const url = 'https://maker.ifttt.com/trigger/' + trigger.eventName + '/with/key/' + this.makerkey;
 
     try {
@@ -130,8 +138,9 @@ IFTTTPlatform.prototype = {
         'There was a problem sending command ' + trigger.eventName + ' to ' + homebridgeAccessory.name,
       );
     }
-  },
-  getInformationService: function (homebridgeAccessory: { name: any; manufacturer: any; model: any; serialNumber: any; }) {
+  }
+
+  getInformationService(homebridgeAccessory) {
     const informationService = new Service.AccessoryInformation();
     informationService
       .setCharacteristic(Characteristic.Name, homebridgeAccessory.name)
@@ -139,8 +148,9 @@ IFTTTPlatform.prototype = {
       .setCharacteristic(Characteristic.Model, homebridgeAccessory.model)
       .setCharacteristic(Characteristic.SerialNumber, homebridgeAccessory.serialNumber);
     return informationService;
-  },
-  bindCharacteristicEvents: function (characteristic, service, homebridgeAccessory) {
+  }
+
+  bindCharacteristicEvents(characteristic, service, homebridgeAccessory) {
     characteristic.on(
       'set',
       (value, callback, context) => {
@@ -200,7 +210,7 @@ IFTTTPlatform.prototype = {
           }
           // Save state
           if (service.controlService.stateful) {
-            this.storage.setItemSync(service.controlService.displayName, value);
+            storage.setItemSync(service.controlService.displayName, value);
           }
         }
         callback();
@@ -218,8 +228,9 @@ IFTTTPlatform.prototype = {
         }
       }, bind(this),
     );
-  },
-  getServices: function (homebridgeAccessory) {
+  }
+
+  getServices(homebridgeAccessory) {
     const services: any = [];
     const informationService = homebridgeAccessory.platform.getInformationService(homebridgeAccessory);
     services.push(informationService);
@@ -235,11 +246,16 @@ IFTTTPlatform.prototype = {
       services.push(service.controlService);
     }
     return services;
-  },
-};
+  }
+}
 
-function IFTTTAccessory(this: any, services) {
-  this.services = services;
+
+class IFTTTAccessory {
+  services: any;
+
+  constructor(services) {
+    this.services = services;
+  }
 }
 
 function shouldDelayCommand(value, delayOn, delayOff) {
