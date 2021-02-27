@@ -161,7 +161,7 @@ IFTTTPlatform.prototype = {
             } else if (value === 1) {
               trigger.values = service.controlService.valuesOn;
             }
-          } else if (value === 0) {
+          } else if (value === false) {
             trigger.eventName = service.controlService.triggerOff;
             service.controlService.onoffstate = false;
             if (service.controlService.valuesOff) {
