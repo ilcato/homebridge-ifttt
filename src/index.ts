@@ -3,7 +3,7 @@
 import { bind } from 'module';
 
 let Service, Characteristic, HomebridgeAPI;
-import request from 'request';
+import superagent = require('superagent');
 
 function IFTTTPlatform(this: any, log, config) {
   this.log = log;
@@ -18,7 +18,7 @@ module.exports = function (homebridge) {
   homebridge.registerPlatform('homebridge-ifttt', 'IFTTT', IFTTTPlatform);
 };
 
-IFTTTPlatform.prototype = {  
+IFTTTPlatform.prototype = {
   accessories: function (callback) {
     this.log('Loading accessories...');
 
@@ -80,11 +80,11 @@ IFTTTPlatform.prototype = {
             service.controlService.onoffstate = !(cachedState === undefined || cachedState === false);
             this.log(
               'Loading service: ' +
-                service.controlService.displayName +
-                ', subtype: ' +
-                service.controlService.subtype +
-                ', RestoredState: ' +
-                service.controlService.onoffstate,
+              service.controlService.displayName +
+              ', subtype: ' +
+              service.controlService.subtype +
+              ', RestoredState: ' +
+              service.controlService.onoffstate,
             );
           } else {
             service.controlService.onoffstate = false;
@@ -111,29 +111,25 @@ IFTTTPlatform.prototype = {
     });
     callback(foundAccessories);
   },
-  command: function (trigger, homebridgeAccessory) {
+  command: async function (trigger, homebridgeAccessory) {
     const url = 'https://maker.ifttt.com/trigger/' + trigger.eventName + '/with/key/' + this.makerkey;
-    request(
-      {
-        url: url,
-        method: 'post',
-        body: JSON.stringify(trigger.values || {}),
-        headers: { 'Content-type': 'application/json' },
-      },
-      (err) => {
-        if (err) {
-          homebridgeAccessory.platform.log(
-            'There was a problem sending command ' + trigger.eventName + ' to ' + homebridgeAccessory.name,
-          );
-        } else {
-          homebridgeAccessory.platform.log(homebridgeAccessory.name + ' sent command ' + trigger.eventName);
-          homebridgeAccessory.platform.log(url);
-          if (trigger.values) {
-            homebridgeAccessory.platform.log(trigger.values);
-          }
-        }
-      },
-    );
+
+    try {
+      await superagent
+        .post(url)
+        .send(trigger.values || {})
+        .set('Content-type', 'application/json');
+      homebridgeAccessory.platform.log(homebridgeAccessory.name + ' sent command ' + trigger.eventName);
+      homebridgeAccessory.platform.log(url);
+      if (trigger.values) {
+        homebridgeAccessory.platform.log(trigger.values);
+      }
+
+    } catch (err) {
+      homebridgeAccessory.platform.log(
+        'There was a problem sending command ' + trigger.eventName + ' to ' + homebridgeAccessory.name,
+      );
+    }
   },
   getInformationService: function (homebridgeAccessory: { name: any; manufacturer: any; model: any; serialNumber: any; }) {
     const informationService = new Service.AccessoryInformation();
