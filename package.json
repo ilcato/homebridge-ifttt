@@ -1,6 +1,6 @@
 {
   "name": "homebridge-ifttt",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Homebridge plugin for IFTTT Maker Channel",
   "note": "peerDependencies is hardcoded to peerDepdendencies in homebridge!!!",
   "main": "dist/index.js",
