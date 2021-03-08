@@ -2,8 +2,8 @@
     "pluginAlias": "IFTTT",
     "pluginType": "platform",
     "singular": true,
-    "headerDisplay": "Homebridge plugin for IFTTT Maker Channel.",
-    "footerDisplay": "See [IFTTT Maker Channel](https://ifttt.com/maker) for an explanation on how to configure an IFTTT recipe with a Maker Channel.",
+    "headerDisplay": "Homebridge plugin for the IFTTT Webhooks service.",
+    "footerDisplay": "See [IFTTT Webhooks](https://ifttt.com/maker_webhooks) for an explanation on how to configure an IFTTT applet with the Webhooks service.",
     "schema": {
         "type": "object",
         "properties": {
@@ -13,11 +13,11 @@
                 "default": "IFTTT"
             },
             "makerkey": {
-                "title": "Name",
+                "title": "Key",
                 "type": "string",
                 "required": true,
                 "placeholder": "a4bti0Y-QLNNyNRdeK9K0PgCyn5BrIW13N9uyMqyECK",
-                "description": "Everything after https://maker.ifttt.com/use/, (https://maker.ifttt.com/use/a4bti0Y-QLNNyNRdeK9K0PgCyn5BrIW13N9uyMqyECK) "
+                "description": "Go to https://ifttt.com/maker_webhooks, and click on Documentation to get your key."
             },
             "accessories": {
                 "title": "Accessories",
