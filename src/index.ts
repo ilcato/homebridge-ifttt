@@ -112,7 +112,7 @@ class IFTTTPlatform {
         accessory.name = s.name;
         accessory.model = 'IFTTT';
         accessory.manufacturer = 'IFTTT';
-        accessory.serialNumber = '<unknown>';
+        accessory.serialNumber = 'IFTTT-' + s.name;
         foundAccessories.push(accessory);
       }
     });
